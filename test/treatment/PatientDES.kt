@@ -1,18 +1,18 @@
 package treatment
 
-import des.IntUpThreshMonitor
+import des.IntIncreaseTo
 import des.Simulation
 import des.Time
 
 fun main() {
     val sim = Simulation()
     sim.init(PatientTemperature(37), FeverPresent(false))
-    sim.registerMonitor(IntUpThreshMonitor(
+    sim.registerMonitor(IntIncreaseTo(
         {it.get(PatientTemperature::class)},
         38,
         {sim ->
             sim.updateState(FeverPresent(true))
-            sim.enqueue(CheckFever(), sim.now.plus(10), sim.now.plus(20), sim.now.plus(30))
+            sim.enqueueRelative(CheckFever(), 10, 20, 30)
         },
     ))
     sim.updateState(PatientTemperature(38), Time(100))

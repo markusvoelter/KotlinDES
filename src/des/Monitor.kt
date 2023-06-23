@@ -12,7 +12,7 @@ class Monitor(val cond : (StateSnapshot, StateSnapshot) -> Boolean, val exec: (S
     }
 }
 
-class IntUpThreshMonitor(val pick : (StateSnapshot) -> IntState, val thresh: Int, val exec: (Simulation) -> Unit): AbstractMonitor() {
+class IntIncreaseTo(val pick : (StateSnapshot) -> IntState, val thresh: Int, val exec: (Simulation) -> Unit): AbstractMonitor() {
     override fun testAndRun(sim: Simulation, nowState: StateSnapshot, prevState: StateSnapshot) {
         val curr = pick(nowState).value()
         val prev = pick(prevState).value()

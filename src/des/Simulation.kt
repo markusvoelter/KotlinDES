@@ -32,6 +32,12 @@ class Simulation {
         }
     }
 
+    fun enqueueRelative(evt: AbstractEvent, vararg deltas: Int) {
+        for (d in deltas) {
+            enqueue(evt, now.plus(d))
+        }
+    }
+
 
     fun registerMonitor(mon: AbstractMonitor) {
         monitors.add(mon)
