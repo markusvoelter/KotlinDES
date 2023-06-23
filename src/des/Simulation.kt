@@ -20,9 +20,18 @@ class Simulation {
         state.update(now, sv)
     }
 
-    fun enqueue(time: Time, evt: AbstractEvent) {
-        queue.add(EventInstance(time, evt))
+    fun updateState(evt: StateVariable, vararg times: Time) {
+        for (t in times) {
+            queue.add(EventInstance(t, SimpleStateUpdateEvent(evt)))
+        }
     }
+
+    fun enqueue(evt: AbstractEvent, vararg times: Time) {
+        for (t in times) {
+            queue.add(EventInstance(t, evt))
+        }
+    }
+
 
     fun registerMonitor(mon: AbstractMonitor) {
         monitors.add(mon)

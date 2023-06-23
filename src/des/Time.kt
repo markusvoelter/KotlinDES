@@ -15,6 +15,8 @@ data class Time(val value: Int) : Comparable<Time>{
         return Time(value - 1)
     }
 
+    fun plus(delta: Int) = Time(this.value + delta)
+
 
 }
 
