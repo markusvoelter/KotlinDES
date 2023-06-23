@@ -7,3 +7,7 @@ abstract class StateVariable {
 abstract class SingleInstanceStateVariable : StateVariable() {
     override fun instanceID() = this::class.qualifiedName!!
 }
+
+interface IntState {
+    fun value(): Int
+}
