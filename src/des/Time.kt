@@ -10,6 +10,11 @@ data class Time(val value: Int) : Comparable<Time>{
         }
     }
 
+    fun immediatelyBefore() : Time {
+        if (value == 0) return this
+        return Time(value - 1)
+    }
+
 
 }
 
