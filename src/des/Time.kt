@@ -16,7 +16,7 @@ data class Time(val clock: Int) : Comparable<Time> {
      * ID.
      */
     companion object {
-        var globalCounter = 0L;
+        var globalCounter = 0L
         fun newID() = globalCounter++
     }
 
