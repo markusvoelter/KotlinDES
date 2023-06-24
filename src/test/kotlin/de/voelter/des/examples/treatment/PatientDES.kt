@@ -28,6 +28,11 @@ class CheckNoMoreFever : AbstractEvent() {
 }
 
 class PatientFeverSimulation : UserSimulation() {
+
+    fun main(args: Array<String>) {
+        run()
+    }
+
     override fun run(): Simulation {
         // create the simulation
         val simulation = Simulation()
