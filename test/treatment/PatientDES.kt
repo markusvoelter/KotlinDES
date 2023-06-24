@@ -1,8 +1,31 @@
 package treatment
 
-import des.IntIncreaseTo
-import des.Simulation
-import des.Time
+import des.*
+
+/**
+ * A state to track the patient's temperature. It's both a single instance
+ * state variable (ie., identified by class name) and an IntState; we have
+ * to implement the value
+ */
+data class PatientTemperature(val temp: Int) : SingleInstanceIntState(temp)
+
+/**
+ * Another one that tracks whether a fever has been detected
+ */
+data class PatientFever(val detected: Boolean) : SingleInstanceBoolState(detected)
+
+/**
+ * An event whose implementation checks whether the fever
+ * has subsided and then udpates the Fever state
+ */
+class CheckNoMoreFever : AbstractEvent() {
+    override fun run(sim: Simulation) {
+        val temp = sim.stateSnapshot().getInt(PatientTemperature::class)
+        if (temp < 38) {
+            sim.updateState(PatientFever(false))
+        }
+    }
+}
 
 fun main() {
     // create the simulation
@@ -15,14 +38,14 @@ fun main() {
             {it.get(PatientTemperature::class)},
             38,
             {sim ->
-                sim.updateState(FeverPresent(true))
-                sim.enqueueRelative(CheckFever(), 10, 20, 30)
+                sim.updateState(PatientFever(true))
+                sim.enqueueRelative(CheckNoMoreFever(), 10, 20, 30)
             },
         )
     )
 
     // initial state of the simulation
-    sim.setupState(PatientTemperature(37), FeverPresent(false))
+    sim.setupState(PatientTemperature(37), PatientFever(false))
 
     // "scripted" behavior
     sim.updateState(PatientTemperature(38), Time(100))

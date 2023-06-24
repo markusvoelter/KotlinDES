@@ -45,8 +45,8 @@ data class EventOccurence(val time: Time, val event: AbstractEvent)
  */
 class EventInstanceComparator : Comparator<EventOccurence> {
     override fun compare(e1: EventOccurence, e2: EventOccurence): Int {
-        if (e1.time.clock < e2.time.clock) return -1
-        if (e1.time.clock > e2.time.clock) return 1
+        if (e1.time < e2.time) return -1
+        if (e1.time > e2.time) return 1
         return 0
     }
 }
