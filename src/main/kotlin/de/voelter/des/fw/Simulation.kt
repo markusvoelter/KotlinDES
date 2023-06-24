@@ -89,8 +89,9 @@ class Simulation {
     /**
      * register a new monitor with the simulation
       */
-    fun registerMonitor(mon: AbstractMonitor) {
+    fun registerMonitor(mon: AbstractMonitor) : Simulation {
         monitors.add(mon)
+        return this
     }
 
     /**
