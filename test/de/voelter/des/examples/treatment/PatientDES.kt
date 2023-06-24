@@ -27,37 +27,35 @@ class CheckNoMoreFever : AbstractEvent() {
     }
 }
 
-fun main() {
-    // create the simulation
-    val simulation = Simulation()
+class PatientFeverSimulation : UserSimulation() {
+    override fun run(): Simulation {
+        // create the simulation
+        val simulation = Simulation()
 
-    // register a monitor that updates the FeverPresent
-    // state if the temperature reaches 38 degrees
-    simulation.registerMonitor(
-        IntIncreaseTo(
-            {it.get(PatientTemperature::class)},
-            38,
-            {sim ->
-                sim.updateState(PatientFever(true))
-                sim.enqueueRelative(CheckNoMoreFever(), 10, 20, 30)
-            },
+        // register a monitor that updates the FeverPresent
+        // state if the temperature reaches 38 degrees
+        simulation.registerMonitor(
+            IntIncreaseTo(
+                { it.get(PatientTemperature::class) },
+                38,
+                { sim ->
+                    sim.updateState(PatientFever(true))
+                    sim.enqueueRelative(CheckNoMoreFever(), 10, 20, 30)
+                },
+            )
         )
-    )
 
-    // initial state of the simulation
-    simulation.setupState(PatientTemperature(37), PatientFever(false))
+        // initial state of the simulation
+        simulation.setupState(PatientTemperature(37), PatientFever(false))
 
-    // "scripted" behavior
-    simulation.updateState(PatientTemperature(38), Time(100))
-    simulation.updateState(PatientTemperature(37), Time(120))
+        // "scripted" behavior
+        simulation.updateState(PatientTemperature(38), Time(100))
+        simulation.updateState(PatientTemperature(37), Time(120))
 
-    // run the thing
-    simulation.run()
+        // run the thing
+        simulation.run()
 
-    // outputs for debugging
-    simulation.stateSnapshot(Time(0)).print()
-    simulation.stateSnapshot(Time(100)).print()
-    simulation.stateSnapshot(Time(200)).print()
-    simulation.state().printHistory()
+        return simulation
+    }
 }
 

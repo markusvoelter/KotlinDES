@@ -22,10 +22,6 @@ data class Time(val clock: Long) : Comparable<Time> {
 
     val dense : Long = newID()
 
-    init {
-        System.err.println(this)
-    }
-
     /**
      * This allows comparison with the native <, >, <= etc. operators.
      * Notice the two-step comparison. We first check the actual clock

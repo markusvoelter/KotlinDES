@@ -59,6 +59,14 @@ class StateSnapshot(val time: Time) {
     }
 
     /**
+     * directly returns the intger value
+     */
+    fun <T> getBool(cls: KClass<T>) : Boolean where T: BooleanState, T: SingleInstanceStateVariable {
+        val s = variables.get(cls.qualifiedName)
+        return (s as BooleanState).value()
+    }
+
+    /**
      * For single instance state variables where the class is the instanceID,
      * we can pass in the class for the lookup (instead of its ID aka qualified name)
      * This way we can use the class to cast the result, making value access simpler
