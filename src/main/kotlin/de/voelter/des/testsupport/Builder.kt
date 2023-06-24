@@ -4,11 +4,14 @@ import de.voelter.des.fw.Simulation
 import de.voelter.des.fw.StateVariable
 import de.voelter.des.fw.Time
 
+/**
+ * Experimental
+ */
 class DESTest(val sim: Simulation) {
     val initials = ArrayList<StateVariable>()
     var steps = TestStepContainer()
 
-    fun setup(vararg initialStates: StateVariable) : Unit {
+    fun setup(vararg initialStates: StateVariable) {
         initials.addAll(initialStates)
     }
 
