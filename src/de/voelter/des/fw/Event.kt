@@ -1,4 +1,4 @@
-package des
+package de.voelter.des.fw
 
 /**
  * Events are the contents of the queue. When the event is

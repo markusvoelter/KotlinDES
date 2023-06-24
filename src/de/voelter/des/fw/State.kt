@@ -1,6 +1,6 @@
-package des
+package de.voelter.des.fw
 
-import util.SortedArrayList
+import de.voelter.des.util.SortedArrayList
 
 /**
  * This class captures the state of the simulation by recording

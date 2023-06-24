@@ -1,4 +1,4 @@
-package des
+package de.voelter.des.fw
 
 import kotlin.reflect.KClass
 

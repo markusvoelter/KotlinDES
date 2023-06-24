@@ -1,4 +1,4 @@
-package des
+package de.voelter.des.fw
 
 /**
  * Represents the time in the system. Time has two parts. The

@@ -1,6 +1,6 @@
-package treatment
+package de.voelter.des.examples.treatment
 
-import des.*
+import de.voelter.des.fw.*
 
 /**
  * A state to track the patient's temperature. It's both a single instance

@@ -1,4 +1,4 @@
-package util
+package de.voelter.des.util
 
 /**
  * I use this for the queue. Not the most efficient implementation because

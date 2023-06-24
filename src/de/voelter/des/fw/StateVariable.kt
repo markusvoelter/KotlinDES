@@ -1,4 +1,4 @@
-package des
+package de.voelter.des.fw
 
 /**
  * The state managed by the simulation is a list of state variables.
