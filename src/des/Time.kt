@@ -7,7 +7,7 @@ package des
  * The dense time is globally incremented, not "per" clock
  * time. This is easier to implement and also does the job.
  */
-data class Time(val clock: Int) : Comparable<Time> {
+data class Time(val clock: Long) : Comparable<Time> {
 
     /**
      * Maintains a "static" global counter. Whenever we create
@@ -51,7 +51,7 @@ data class Time(val clock: Int) : Comparable<Time> {
      * one tick back.
      */
     fun immediatelyBefore() : Time {
-        if (clock == 0) return this
+        if (clock == 0L) return this
         return Time(clock - 1)
     }
 

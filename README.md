@@ -6,9 +6,9 @@ A simple discrete event simulation framework implemented in Kotlin
 
 ## Open Issues
  
-* No support for dense time. If you register multiple
-  events for the same time, their execution order is 
-  non-deterministic. Potential simple solution: add a 
-  global counter as part of the time that is sorted 
-  after the main time.
+* Performance: more efficient sorted list for the queue
+* Performance: We could add a variant of monitors that fire only once;
+  they would then be removed from the list so we don't 
+  unnecessarily continue testing condition.
+* Performance: Simulation.latest is inefficient.
   

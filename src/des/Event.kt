@@ -34,17 +34,17 @@ class SimpleStateUpdateEvent(val stateVar : StateVariable) : AbstractEvent() {
 
 /**
  * Helper class for the queue. We don't directly store the events in the
- * queue, but wrapped with an EventInstance; this instance also captures
+ * queue, but wrapped with an EventOccurence; this instance also captures
  * the time at which the event is supposed to be executed.
  */
-data class EventInstance(val time: Time, val event: AbstractEvent)
+data class EventOccurence(val time: Time, val event: AbstractEvent)
 
 /**
  * And here is the comparator for the event instances, to make sure
  * that our sorted list sorts them by time
  */
-class EventInstanceComparator : Comparator<EventInstance> {
-    override fun compare(e1: EventInstance, e2: EventInstance): Int {
+class EventInstanceComparator : Comparator<EventOccurence> {
+    override fun compare(e1: EventOccurence, e2: EventOccurence): Int {
         if (e1.time.clock < e2.time.clock) return -1
         if (e1.time.clock > e2.time.clock) return 1
         return 0
