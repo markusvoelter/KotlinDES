@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/des.iml" filepath="$PROJECT_DIR$/des.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KotlinDES.iml" filepath="$PROJECT_DIR$/KotlinDES.iml" />
     </modules>
   </component>
 </project>
