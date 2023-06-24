@@ -16,7 +16,11 @@ class Simulation {
         }
     }
 
+    fun latest(instanceID: String) = stateSnapshot().get(instanceID)
+
     fun updateState(sv: StateVariable) {
+        val curr = latest(sv.instanceID())
+        if (sv.equals(curr)) return
         state.update(now, sv)
     }
 
@@ -47,7 +51,7 @@ class Simulation {
         while (!queue.isEmpty() && now <= time) {
             val nextEventInstance = queue.removeAt(0)
             now = nextEventInstance.time
-            nextEventInstance.event.run(this, this.state)
+            nextEventInstance.event.run(this)
             for (m in monitors) {
                 m.testAndRun(this, stateSnapshot(now), stateSnapshot(now.immediatelyBefore()))
             }

@@ -21,5 +21,6 @@ fun main() {
     sim.stateSnapshot(Time(0)).print()
     sim.stateSnapshot(Time(100)).print()
     sim.stateSnapshot(Time(200)).print()
+    sim.state().printHistory()
 }
 

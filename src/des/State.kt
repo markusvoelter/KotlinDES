@@ -20,14 +20,21 @@ class State {
         return snapshot
     }
 
+    fun printHistory() {
+        System.err.println("History")
+        for (su in history) {
+            System.err.println("  " + su.time.clock+" : " + su.stateVar)
+        }
+    }
+
 }
 
 data class StateUpdate(val time: Time, val stateVar: StateVariable)
 
 class StateUpdateComparator : Comparator<StateUpdate> {
     override fun compare(e1: StateUpdate, e2: StateUpdate): Int {
-        if (e1.time.value < e2.time.value) return -1
-        if (e1.time.value > e2.time.value) return 1
+        if (e1.time.clock < e2.time.clock) return -1
+        if (e1.time.clock > e2.time.clock) return 1
         return 0
     }
 }

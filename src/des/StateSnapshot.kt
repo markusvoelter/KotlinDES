@@ -15,7 +15,7 @@ class StateSnapshot(val time: Time) {
     fun <T : Any> get(cls: KClass<T>) = variables.get(cls.qualifiedName) as T
 
     fun print() {
-        System.err.println("Snapshot for " + time.value)
+        System.err.println("Snapshot for " + time.clock)
         for (k in variables.keys) {
             System.err.println("  " + k + " -> " + variables.get(k))
         }
