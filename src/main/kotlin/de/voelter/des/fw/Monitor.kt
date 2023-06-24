@@ -29,6 +29,16 @@ class Monitor(val cond : (StateSnapshot, StateSnapshot) -> Boolean, val exec: (S
 }
 
 /**
+ * A monitor whose condition is always true, ie, it always fires.
+ */
+class AlwaysTrueMonitor(val exec: (Simulation) -> Unit): AbstractMonitor() {
+    override fun test(nowState: StateSnapshot, prevState: StateSnapshot) = true
+    override fun run(sim: Simulation) { exec(sim) }
+}
+
+
+
+/**
  * This one is a convenience for BooleanStates. The trigger fires if in the current
  * state the Boolean is true and was false in the previous state. So we have to look
  * at the same state variable in both states, which is why the user supplies one

@@ -10,6 +10,12 @@ import de.voelter.des.fw.*
 data class PatientTemperature(val temp: Int) : SingleInstanceIntState(temp)
 
 /**
+ * Demonstrate derived values
+ */
+data class PatientTemperatureTimesTwo(val temp: Int) : SingleInstanceIntState(temp)
+
+
+/**
  * Another one that tracks whether a fever has been detected
  */
 data class PatientFever(val detected: Boolean) : SingleInstanceBoolState(detected)
@@ -49,6 +55,15 @@ class PatientFeverSimulation : UserSimulation() {
                 },
             )
         )
+
+        /**
+         * register a kind of monitor that always fires and computes
+         * derived values; here, PatientTemperatureTimesTwo
+         */
+        simulation.registerDeriver { sim ->
+            val temp = sim.stateSnapshot().getInt(PatientTemperature::class)
+            sim.updateState(PatientTemperatureTimesTwo(2 * temp))
+        }
 
         // initial state of the simulation
         simulation.setupState(PatientTemperature(37), PatientFever(false))

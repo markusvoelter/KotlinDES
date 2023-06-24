@@ -95,6 +95,17 @@ class Simulation {
     }
 
     /**
+     * A deriver is a monitor with no condition that always
+     * fires and updates the state somehow, typically with
+     * "derived", calculated values
+     */
+    fun registerDeriver(exec: (Simulation) -> Unit) : Simulation {
+        monitors.add(AlwaysTrueMonitor(exec))
+        return this
+    }
+
+
+    /**
      * Runs the simulation until the queue is empty or the supplied
      * time has been reached.
      */

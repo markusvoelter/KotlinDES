@@ -19,4 +19,5 @@ can run `./gradlew test` from the command line.
   they would then be removed from the list so we don't 
   unnecessarily continue testing condition.
 * Performance: Simulation.latest is inefficient.
+* Should I add calculated state variables?
   
