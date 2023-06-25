@@ -32,11 +32,10 @@ class StateSnapshot(val time: Time) {
      * Convenience method to grab integer state's values directly
      */
     fun getInt(instanceID: String): Int {
-        val s = variables[instanceID]
-        if (s is IntState) {
-            return s.value()
+        return when (val s = variables[instanceID]) {
+            is IntState -> s.value()
+            else -> throw RuntimeException("$instanceID is not an IntState")
         }
-        throw RuntimeException("$instanceID is not an IntState")
     }
 
     /**
@@ -52,11 +51,10 @@ class StateSnapshot(val time: Time) {
      * Convenience method to grab boolean state's values directly
      */
     fun getBool(instanceID: String): Boolean {
-        val s = variables[instanceID]
-        if (s is BooleanState) {
-            return s.value()
+        return when (val s = variables[instanceID]) {
+            is BooleanState -> s.value()
+            else -> throw RuntimeException("$instanceID is not an BooleanState")
         }
-        throw RuntimeException("$instanceID is not an BooleanState")
     }
 
     /**
