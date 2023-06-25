@@ -6,9 +6,9 @@ import de.voelter.des.testsupport.test
 
 val sim = Simulation().registerMonitor(
     IntIncreaseTo(
-        { it.get(PatientTemperature::class) },
-        38,
-        { sim ->
+        pick = { it.get<PatientTemperature>() },
+        threshold = 38,
+        exec = { sim ->
             sim.updateState(PatientFever(true))
             sim.enqueueRelative(CheckNoMoreFever(), 10, 20, 30)
         }
