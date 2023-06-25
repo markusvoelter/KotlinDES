@@ -30,7 +30,7 @@ class StateSnapshot(val time: Time) {
     /**
      * Convenience method to grab integer state's values directly
      */
-    fun getInt(instanceID: String) : Int {
+    fun getInt(instanceID: String): Int {
         val s = variables[instanceID]
         if (s is IntState) {
             return s.value()
@@ -41,16 +41,15 @@ class StateSnapshot(val time: Time) {
     /**
      * directly returns the intger value
      */
-    fun <T> getInt(cls: KClass<T>) : Int where T: IntState, T: SingleInstanceStateVariable {
+    fun <T> getInt(cls: KClass<T>): Int where T : IntState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]
         return (s as IntState).value()
     }
 
-
     /**
      * Convenience method to grab boolean state's values directly
      */
-    fun getBool(instanceID: String) : Boolean {
+    fun getBool(instanceID: String): Boolean {
         val s = variables[instanceID]
         if (s is BooleanState) {
             return s.value()
@@ -61,7 +60,7 @@ class StateSnapshot(val time: Time) {
     /**
      * directly returns the intger value
      */
-    fun <T> getBool(cls: KClass<T>) : Boolean where T: BooleanState, T: SingleInstanceStateVariable {
+    fun <T> getBool(cls: KClass<T>): Boolean where T : BooleanState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]
         return (s as BooleanState).value()
     }
@@ -84,5 +83,4 @@ class StateSnapshot(val time: Time) {
         }
         System.err.println("")
     }
-
 }

@@ -5,7 +5,7 @@ package de.voelter.des.util
  * it resorts the whole list whenever you add something to it. maybe
  * some red/black tree or something would be better.
  */
-class SortedArrayList<T>(val comparator: Comparator<T>): ArrayList<T>() {
+class SortedArrayList<T>(val comparator: Comparator<T>) : ArrayList<T>() {
 
     override fun add(element: T): Boolean {
         val ret = super.add(element)

@@ -28,7 +28,7 @@ class Simulation {
      * This can be called at the beginning of the simulation to set up
      * initial values for the state variables
      */
-    fun setupState(vararg stateVars : StateVariable) {
+    fun setupState(vararg stateVars: StateVariable) {
         stateVars.forEach { state.update(Time(0), it) }
     }
 
@@ -58,7 +58,7 @@ class Simulation {
      * event effets that state change.
      */
     fun updateState(evt: StateVariable, vararg times: Time) {
-        times.forEach { eventQueue.add(EventOccurence(it, SimpleStateUpdateEvent(evt)))  }
+        times.forEach { eventQueue.add(EventOccurence(it, SimpleStateUpdateEvent(evt))) }
     }
 
     /**
@@ -80,8 +80,8 @@ class Simulation {
 
     /**
      * register a new monitor with the simulation
-      */
-    fun registerMonitor(mon: AbstractMonitor) : Simulation {
+     */
+    fun registerMonitor(mon: AbstractMonitor): Simulation {
         monitors.add(mon)
         return this
     }
@@ -91,11 +91,10 @@ class Simulation {
      * fires and updates the state somehow, typically with
      * "derived", calculated values
      */
-    fun registerDeriver(exec: SimulationExecutor) : Simulation {
+    fun registerDeriver(exec: SimulationExecutor): Simulation {
         monitors.add(AlwaysTrueMonitor(exec))
         return this
     }
-
 
     /**
      * Runs the simulation until the queue is empty or the supplied

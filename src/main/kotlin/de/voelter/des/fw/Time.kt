@@ -20,7 +20,7 @@ data class Time(val clock: Long) : Comparable<Time> {
         fun newID() = globalCounter++
     }
 
-    val dense : Long = newID()
+    val dense: Long = newID()
 
     /**
      * This allows comparison with the native <, >, <= etc. operators.
@@ -46,7 +46,7 @@ data class Time(val clock: Long) : Comparable<Time> {
      * time "just before", this one creates a new Time
      * one tick back.
      */
-    fun immediatelyBefore() : Time {
+    fun immediatelyBefore(): Time {
         if (clock == 0L) return this
         return Time(clock - 1)
     }
@@ -56,7 +56,4 @@ data class Time(val clock: Long) : Comparable<Time> {
      * by the delta
      */
     operator fun plus(delta: Int) = Time(this.clock + delta)
-
-
 }
-

@@ -14,7 +14,7 @@ abstract class AbstractEvent {
  * State variable. There could be another one that produces a list
  * of state variables instead of just one.
  */
-class StateUpdateEvent(val code : (State) -> StateVariable) : AbstractEvent() {
+class StateUpdateEvent(val code: (State) -> StateVariable) : AbstractEvent() {
     override fun run(sim: Simulation) {
         val stateVar = code(sim.state())
         sim.state().update(sim.now, stateVar)
@@ -26,7 +26,7 @@ class StateUpdateEvent(val code : (State) -> StateVariable) : AbstractEvent() {
  * a state variable for immediate update, but we directly pass the state
  * variable.
  */
-class SimpleStateUpdateEvent(val stateVar : StateVariable) : AbstractEvent() {
+class SimpleStateUpdateEvent(val stateVar: StateVariable) : AbstractEvent() {
     override fun run(sim: Simulation) {
         sim.state().update(sim.now, stateVar)
     }

@@ -7,7 +7,7 @@ package de.voelter.des.fw
  * must be emulated via the instanceID.
  */
 abstract class StateVariable {
-    abstract fun instanceID() : String
+    abstract fun instanceID(): String
 }
 
 /**

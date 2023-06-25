@@ -1,6 +1,12 @@
 package de.voelter.des.examples.treatment
 
-import de.voelter.des.fw.*
+import de.voelter.des.fw.AbstractEvent
+import de.voelter.des.fw.IntIncreaseTo
+import de.voelter.des.fw.Simulation
+import de.voelter.des.fw.SingleInstanceBoolState
+import de.voelter.des.fw.SingleInstanceIntState
+import de.voelter.des.fw.Time
+import de.voelter.des.fw.UserSimulation
 
 /**
  * A state to track the patient's temperature. It's both a single instance
@@ -13,7 +19,6 @@ data class PatientTemperature(val temp: Int) : SingleInstanceIntState(temp)
  * Demonstrate derived values
  */
 data class PatientTemperatureTimesTwo(val temp: Int) : SingleInstanceIntState(temp)
-
 
 /**
  * Another one that tracks whether a fever has been detected
@@ -52,7 +57,7 @@ class PatientFeverSimulation : UserSimulation() {
                 { sim ->
                     sim.updateState(PatientFever(true))
                     sim.enqueueRelative(CheckNoMoreFever(), 10, 20, 30)
-                },
+                }
             )
         )
 
@@ -78,4 +83,3 @@ class PatientFeverSimulation : UserSimulation() {
         return simulation
     }
 }
-
