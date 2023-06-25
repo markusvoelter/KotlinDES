@@ -49,8 +49,8 @@ class AlwaysTrueMonitor(val exec: SimulationExecutor) : AbstractMonitor() {
  */
 class BoolBecomesTrue(val pick: (StateSnapshot) -> BooleanState, val exec: SimulationExecutor) : AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {
-        val curr = pick(nowState).value()
-        val prev = pick(prevState).value()
+        val curr = pick(nowState).value
+        val prev = pick(prevState).value
         return curr && !prev
     }
     override fun run(sim: Simulation) { exec(sim) }
@@ -62,8 +62,8 @@ class BoolBecomesTrue(val pick: (StateSnapshot) -> BooleanState, val exec: Simul
  */
 class IntIncreaseTo(val pick: (StateSnapshot) -> IntState, val threshold: Int, val exec: SimulationExecutor) : AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {
-        val curr = pick(nowState).value()
-        val prev = pick(prevState).value()
+        val curr = pick(nowState).value
+        val prev = pick(prevState).value
         return threshold in (prev + 1)..curr
     }
     override fun run(sim: Simulation) { exec(sim) }

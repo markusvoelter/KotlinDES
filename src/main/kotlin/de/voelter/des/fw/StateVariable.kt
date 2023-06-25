@@ -28,23 +28,19 @@ abstract class SingleInstanceStateVariable : StateVariable() {
  * places.
  */
 interface IntState {
-    fun value(): Int
+    val value: Int
 }
 
 interface BooleanState {
-    fun value(): Boolean
+    val value: Boolean
 }
 
 /**
  * Another convenience that combines single instances with integer state
  */
-abstract class SingleInstanceIntState(val value: Int) : SingleInstanceStateVariable(), IntState {
-    override fun value() = value
-}
+abstract class SingleInstanceIntState(override val value: Int) : SingleInstanceStateVariable(), IntState
 
 /**
  * Same for Boolean
  */
-abstract class SingleInstanceBoolState(val value: Boolean) : SingleInstanceStateVariable(), BooleanState {
-    override fun value() = value
-}
+abstract class SingleInstanceBoolState(override val value: Boolean) : SingleInstanceStateVariable(), BooleanState

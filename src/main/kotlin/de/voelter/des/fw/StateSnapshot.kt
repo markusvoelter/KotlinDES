@@ -33,7 +33,7 @@ class StateSnapshot(val time: Time) {
      */
     fun getInt(instanceID: String): Int {
         return when (val s = variables[instanceID]) {
-            is IntState -> s.value()
+            is IntState -> s.value
             else -> throw RuntimeException("$instanceID is not an IntState")
         }
     }
@@ -43,7 +43,7 @@ class StateSnapshot(val time: Time) {
      */
     fun <T> getInt(cls: KClass<T>): Int where T : IntState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]
-        return (s as IntState).value()
+        return (s as IntState).value
     }
     inline fun <reified T> getInt(): Int where T : IntState, T : SingleInstanceStateVariable = getInt(T::class)
 
@@ -52,7 +52,7 @@ class StateSnapshot(val time: Time) {
      */
     fun getBool(instanceID: String): Boolean {
         return when (val s = variables[instanceID]) {
-            is BooleanState -> s.value()
+            is BooleanState -> s.value
             else -> throw RuntimeException("$instanceID is not an BooleanState")
         }
     }
@@ -62,7 +62,7 @@ class StateSnapshot(val time: Time) {
      */
     fun <T> getBool(cls: KClass<T>): Boolean where T : BooleanState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]
-        return (s as BooleanState).value()
+        return (s as BooleanState).value
     }
     inline fun <reified T> getBool(): Boolean where T : BooleanState, T : SingleInstanceStateVariable = getBool(T::class)
 
