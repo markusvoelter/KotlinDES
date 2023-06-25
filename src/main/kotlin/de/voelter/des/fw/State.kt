@@ -30,11 +30,11 @@ class State {
      * class is basically a map from instanceID to value.
      */
     fun snapshot(time: Time): StateSnapshot {
-        val snapshot = StateSnapshot(time)
-        history.takeWhile { it.time <= time }.forEach {
-            snapshot.register(it.stateVar)
+        return StateSnapshot(time).apply {
+            history.takeWhile { it.time <= time }.forEach {
+                register(it.stateVar)
+            }
         }
-        return snapshot
     }
 
     /**
