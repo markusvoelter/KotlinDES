@@ -8,8 +8,8 @@ package de.voelter.des.util
 class SortedArrayList<T>(val comparator: Comparator<T>) : ArrayList<T>() {
 
     override fun add(element: T): Boolean {
-        val ret = super.add(element)
-        sortWith(comparator)
-        return ret
+        val index = binarySearch(element, comparator).let { if (it < 0) -(it + 1) else it }
+        super.add(index, element)
+        return true
     }
 }
