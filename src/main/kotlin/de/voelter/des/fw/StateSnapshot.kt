@@ -16,7 +16,7 @@ class StateSnapshot(val time: Time) {
 
     /**
      * registers a StateVariable by ID. This function is called
-     * by State in order of occurence fo the StateUpdates, then
+     * by State in order of occurrence fo the StateUpdates, then
      * this ends up with the latest update (per instanceID) last.
      */
     internal fun register(state: StateVariable) {
@@ -40,7 +40,7 @@ class StateSnapshot(val time: Time) {
     }
 
     /**
-     * directly returns the intger value
+     * directly returns the integer value
      */
     fun <T> getInt(cls: KClass<T>): Int where T : IntState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]
@@ -59,7 +59,7 @@ class StateSnapshot(val time: Time) {
     }
 
     /**
-     * directly returns the intger value
+     * directly returns the boolean value
      */
     fun <T> getBool(cls: KClass<T>): Boolean where T : BooleanState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]

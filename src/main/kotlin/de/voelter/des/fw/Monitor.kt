@@ -45,7 +45,7 @@ class AlwaysTrueMonitor(val exec: SimulationExecutor) : AbstractMonitor() {
  * pick function that grabs the BooleanState from a snapshot. The implementation
  * then applies that pick function to the now and current states.
  *
- * A BoolBecomesFalse monitor shoould be developed at some point as well.
+ * A BoolBecomesFalse monitor should be developed at some point as well.
  */
 class BoolBecomesTrue(val pick: (StateSnapshot) -> BooleanState, val exec: SimulationExecutor) : AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {

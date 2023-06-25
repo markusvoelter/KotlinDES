@@ -11,7 +11,7 @@ class Simulation {
     /**
      * The queue for the events. Note how it uses the EventInstanceComparator to enforce sorting.
      */
-    private val eventQueue = SortedArrayList<EventOccurence>(EventInstanceComparator())
+    private val eventQueue = SortedArrayList<EventOccurrence>(EventInstanceComparator())
 
     /**
      * The state/history maintained by the system; see State class for details.
@@ -33,7 +33,7 @@ class Simulation {
     }
 
     /**
-     * Grabs the latest value for a particular state. Currently this
+     * Grabs the latest value for a particular state. Currently, this
      * builds a whole snapshot for "now" and then grabs the respective
      * state. This could be done much more efficiently by looking
      * at the history backwards for a change of the instanceID
@@ -55,19 +55,19 @@ class Simulation {
      * Same as above, but the state update is scheduled for
      * a time in the future. To this end, we enqueue an
      * EventInstance for that future time at which the
-     * event effets that state change.
+     * event effects that state change.
      */
     fun updateState(evt: StateVariable, vararg times: Time) {
-        times.forEach { eventQueue.add(EventOccurence(it, SimpleStateUpdateEvent(evt))) }
+        times.forEach { eventQueue.add(EventOccurrence(it, SimpleStateUpdateEvent(evt))) }
     }
 
     /**
      * puts the event into the queue at the given list
-     * of future times. Creates a new event occurence for
+     * of future times. Creates a new event occurrence for
      * each of the times.
      */
     fun enqueue(evt: AbstractEvent, vararg times: Time) {
-        times.forEach { eventQueue.add(EventOccurence(it, evt)) }
+        times.forEach { eventQueue.add(EventOccurrence(it, evt)) }
     }
 
     /**
@@ -126,7 +126,7 @@ class Simulation {
     }
 
     /**
-     * Create a snapshor for "now"
+     * Create a snapshot for "now"
      */
     fun stateSnapshot() = stateSnapshot(now)
 

@@ -36,7 +36,7 @@ interface BooleanState {
 }
 
 /**
- * Another convenience that combines single instanceness with integer state
+ * Another convenience that combines single instances with integer state
  */
 abstract class SingleInstanceIntState(val value: Int) : SingleInstanceStateVariable(), IntState {
     override fun value() = value

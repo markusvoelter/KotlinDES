@@ -10,7 +10,7 @@ import de.voelter.des.fw.UserSimulation
 
 /**
  * A state to track the patient's temperature. It's both a single instance
- * state variable (ie., identified by class name) and an IntState; we have
+ * state variable (i.e., identified by class name) and an IntState; we have
  * to implement the value
  */
 data class PatientTemperature(val temp: Int) : SingleInstanceIntState(temp)
@@ -27,7 +27,7 @@ data class PatientFever(val detected: Boolean) : SingleInstanceBoolState(detecte
 
 /**
  * An event whose implementation checks whether the fever
- * has subsided and then udpates the Fever state
+ * has subsided and then updates the Fever state
  */
 class CheckNoMoreFever : AbstractEvent() {
     override fun run(sim: Simulation) {
