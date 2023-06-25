@@ -45,7 +45,7 @@ class State {
     fun printHistory() {
         System.err.println("History")
         for (su in history) {
-            System.err.println("  " + su.time.clock + " : " + su.stateVar)
+            System.err.println("  ${su.time.clock} : ${su.stateVar}")
         }
     }
 }
