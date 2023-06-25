@@ -1,5 +1,7 @@
 package de.voelter.des.fw
 
+import java.util.concurrent.atomic.AtomicLong
+
 /**
  * Represents the time in the system. Time has two parts. The
  * wall-clock time represented as an integer (the one passed
@@ -16,8 +18,8 @@ data class Time(val clock: Long) : Comparable<Time> {
      * ID.
      */
     companion object {
-        var globalCounter = 0L
-        fun newID() = globalCounter++
+        private var globalCounter = AtomicLong(0L)
+        fun newID() = globalCounter.getAndIncrement()
     }
 
     val dense: Long = newID()
