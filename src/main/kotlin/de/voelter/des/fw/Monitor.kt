@@ -11,7 +11,7 @@ package de.voelter.des.fw
  */
 abstract class AbstractMonitor {
     abstract fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean
-    abstract fun run(sim: Simulation): Unit
+    abstract fun run(sim: Simulation)
     fun testAndRun(sim: Simulation, nowState: StateSnapshot, prevState: StateSnapshot) {
         if (test(nowState, prevState)) {
             run(sim)

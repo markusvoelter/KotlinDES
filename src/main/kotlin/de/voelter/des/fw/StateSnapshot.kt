@@ -1,6 +1,7 @@
 package de.voelter.des.fw
 
 import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
 /**
  * A snapshot of the state history for a given point in time.
@@ -71,7 +72,7 @@ class StateSnapshot(val time: Time) {
      * This way we can use the class to cast the result, making value access simpler
      * for the client
      */
-    fun <T : SingleInstanceStateVariable> get(cls: KClass<T>) = variables[cls.qualifiedName] as T
+    fun <T : SingleInstanceStateVariable> get(cls: KClass<T>) = cls.cast(variables[cls.qualifiedName])
 
     /**
      * Debug support
