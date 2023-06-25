@@ -43,4 +43,4 @@ data class EventOccurrence(val time: Time, val event: AbstractEvent)
  * And here is the comparator for the event instances, to make sure
  * that our sorted list sorts them by time
  */
-class EventInstanceComparator : Comparator<EventOccurrence> by compareBy({ it.time })
+object EventInstanceComparator : Comparator<EventOccurrence> by compareBy({ it.time })

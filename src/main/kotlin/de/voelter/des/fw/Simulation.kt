@@ -11,7 +11,7 @@ class Simulation {
     /**
      * The queue for the events. Note how it uses the EventInstanceComparator to enforce sorting.
      */
-    private val eventQueue = SortedArrayList(EventInstanceComparator())
+    private val eventQueue = SortedArrayList(EventInstanceComparator)
 
     /**
      * The state/history maintained by the system; see State class for details.
