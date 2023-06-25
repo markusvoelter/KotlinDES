@@ -64,7 +64,7 @@ class IntIncreaseTo(val pick: (StateSnapshot) -> IntState, val threshold: Int, v
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {
         val curr = pick(nowState).value()
         val prev = pick(prevState).value()
-        return curr >= threshold && prev < threshold
+        return threshold in (prev + 1)..curr
     }
     override fun run(sim: Simulation) { exec(sim) }
 }
