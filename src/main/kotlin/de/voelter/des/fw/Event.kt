@@ -43,12 +43,4 @@ data class EventOccurrence(val time: Time, val event: AbstractEvent)
  * And here is the comparator for the event instances, to make sure
  * that our sorted list sorts them by time
  */
-class EventInstanceComparator : Comparator<EventOccurrence> {
-    override fun compare(e1: EventOccurrence, e2: EventOccurrence): Int {
-        return when {
-            e1.time < e2.time -> -1
-            e1.time > e2.time -> 1
-            else -> 0
-        }
-    }
-}
+class EventInstanceComparator : Comparator<EventOccurrence> by compareBy({ it.time })
