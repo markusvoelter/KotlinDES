@@ -58,7 +58,7 @@ class Simulation {
      * event effects that state change.
      */
     fun updateState(evt: StateVariable, vararg times: Time) {
-        times.forEach { eventQueue.add(EventOccurrence(it, SimpleStateUpdateEvent(evt))) }
+        times.forEach { eventQueue += EventOccurrence(it, SimpleStateUpdateEvent(evt)) }
     }
 
     /**
@@ -67,7 +67,7 @@ class Simulation {
      * each of the times.
      */
     fun enqueue(evt: AbstractEvent, vararg times: Time) {
-        times.forEach { eventQueue.add(EventOccurrence(it, evt)) }
+        times.forEach { eventQueue += EventOccurrence(it, evt) }
     }
 
     /**
@@ -82,7 +82,7 @@ class Simulation {
      * register a new monitor with the simulation
      */
     fun registerMonitor(mon: AbstractMonitor): Simulation {
-        monitors.add(mon)
+        monitors += mon
         return this
     }
 
@@ -92,7 +92,7 @@ class Simulation {
      * "derived", calculated values
      */
     fun registerDeriver(exec: SimulationExecutor): Simulation {
-        monitors.add(AlwaysTrueMonitor(exec))
+        monitors += AlwaysTrueMonitor(exec)
         return this
     }
 

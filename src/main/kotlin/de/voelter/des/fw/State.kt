@@ -19,7 +19,7 @@ class State {
      * register a state update for a particular time
      */
     fun update(time: Time, stateVar: StateVariable) {
-        history.add(StateUpdate(time, stateVar))
+        history += StateUpdate(time, stateVar)
     }
 
     /**
