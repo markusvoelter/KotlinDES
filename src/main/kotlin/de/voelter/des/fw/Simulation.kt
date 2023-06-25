@@ -102,7 +102,7 @@ class Simulation {
      */
     fun runTo(stopTime: Time) {
         // as I said: run until queue is empty or stopTime has been reached
-        while (!eventQueue.isEmpty() && now <= stopTime) {
+        while (eventQueue.isNotEmpty() && now <= stopTime) {
             // grab next event from the queue; remember it is sorted by (dense) time, increasing
             val nextEventInstance = eventQueue.removeAt(0)
             // advance the simulation time to the time of the event,
