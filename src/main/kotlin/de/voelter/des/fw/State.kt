@@ -31,9 +31,8 @@ class State {
      */
     fun snapshot(time: Time): StateSnapshot {
         val snapshot = StateSnapshot(time)
-        for (stateUpdate in history) {
-            if (stateUpdate.time > time) break
-            snapshot.register(stateUpdate.stateVar)
+        history.takeWhile { it.time <= time }.forEach {
+            snapshot.register(it.stateVar)
         }
         history.iterator()
         return snapshot
