@@ -13,7 +13,7 @@ class State {
      * The actual list of StateUpdate objects that constitute the
      * history of the system.
      */
-    private val history = SortedArrayList<StateUpdate>(StateUpdateComparator())
+    private val history = SortedArrayList<StateUpdate>(StateUpdateComparator)
 
     /**
      * register a state update for a particular time
@@ -57,12 +57,4 @@ data class StateUpdate(val time: Time, val stateVar: StateVariable)
 /**
  * Comparator to sort StateUpdates by time
  */
-class StateUpdateComparator : Comparator<StateUpdate> {
-    override fun compare(e1: StateUpdate, e2: StateUpdate): Int {
-        return when {
-            e1.time < e2.time -> -1
-            e1.time > e2.time -> 1
-            else -> 0
-        }
-    }
-}
+object StateUpdateComparator : Comparator<StateUpdate> by compareBy({ it.time })
