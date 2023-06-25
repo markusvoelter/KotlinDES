@@ -30,15 +30,7 @@ data class Time(val clock: Long) : Comparable<Time> {
      * dense values, we ensure "insertion ordering" per clock time.
      */
     override fun compareTo(other: Time): Int {
-        return when {
-            this.clock > other.clock -> 1
-            this.clock < other.clock -> -1
-            else -> when {
-                this.dense > other.dense -> 1
-                this.dense < other.dense -> -1
-                else -> 0
-            }
-        }
+        return compareBy<Time>({ it.clock }, { it.dense }).compare(this, other)
     }
 
     /**
