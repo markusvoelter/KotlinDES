@@ -19,30 +19,30 @@ class StateSnapshot(val time: Time) {
      * this ends up with the latest update (per instanceID) last.
      */
     internal fun register(state: StateVariable) {
-        variables.put(state.instanceID(), state)
+        variables[state.instanceID()] = state
     }
 
     /**
      * returns the state value for a given instanceID
      */
-    fun get(instanceID: String) = variables.get(instanceID)
+    operator fun get(instanceID: String) = variables[instanceID]
 
     /**
      * Convenience method to grab integer state's values directly
      */
     fun getInt(instanceID: String) : Int {
-        val s = variables.get(instanceID)
+        val s = variables[instanceID]
         if (s is IntState) {
             return s.value()
         }
-        throw RuntimeException(instanceID + " is not an IntState")
+        throw RuntimeException("$instanceID is not an IntState")
     }
 
     /**
      * directly returns the intger value
      */
     fun <T> getInt(cls: KClass<T>) : Int where T: IntState, T: SingleInstanceStateVariable {
-        val s = variables.get(cls.qualifiedName)
+        val s = variables[cls.qualifiedName]
         return (s as IntState).value()
     }
 
@@ -51,18 +51,18 @@ class StateSnapshot(val time: Time) {
      * Convenience method to grab boolean state's values directly
      */
     fun getBool(instanceID: String) : Boolean {
-        val s = variables.get(instanceID)
+        val s = variables[instanceID]
         if (s is BooleanState) {
             return s.value()
         }
-        throw RuntimeException(instanceID + " is not an BooleanState")
+        throw RuntimeException("$instanceID is not an BooleanState")
     }
 
     /**
      * directly returns the intger value
      */
     fun <T> getBool(cls: KClass<T>) : Boolean where T: BooleanState, T: SingleInstanceStateVariable {
-        val s = variables.get(cls.qualifiedName)
+        val s = variables[cls.qualifiedName]
         return (s as BooleanState).value()
     }
 
@@ -72,7 +72,7 @@ class StateSnapshot(val time: Time) {
      * This way we can use the class to cast the result, making value access simpler
      * for the client
      */
-    fun <T : SingleInstanceStateVariable> get(cls: KClass<T>) = variables.get(cls.qualifiedName) as T
+    fun <T : SingleInstanceStateVariable> get(cls: KClass<T>) = variables[cls.qualifiedName] as T
 
     /**
      * Debug support

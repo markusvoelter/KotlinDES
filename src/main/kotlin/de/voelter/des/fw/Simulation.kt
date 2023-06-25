@@ -29,9 +29,7 @@ class Simulation {
      * initial values for the state variables
      */
     fun setupState(vararg stateVars : StateVariable) {
-        for (sv in stateVars) {
-            state.update(Time(0), sv)
-        }
+        stateVars.forEach { state.update(Time(0), it) }
     }
 
     /**
@@ -40,7 +38,7 @@ class Simulation {
      * state. This could be done much more efficiently by looking
      * at the history backwards for a change of the instanceID
      */
-    fun latest(instanceID: String) = stateSnapshot().get(instanceID)
+    fun latest(instanceID: String) = stateSnapshot()[instanceID]
 
     /**
      * Updates a particular state immediately (for "now"). Note that
@@ -49,7 +47,7 @@ class Simulation {
      */
     fun updateState(sv: StateVariable) {
         val curr = latest(sv.instanceID())
-        if (sv.equals(curr)) return
+        if (sv == curr) return
         state.update(now, sv)
     }
 
@@ -60,9 +58,7 @@ class Simulation {
      * event effets that state change.
      */
     fun updateState(evt: StateVariable, vararg times: Time) {
-        for (t in times) {
-            eventQueue.add(EventOccurence(t, SimpleStateUpdateEvent(evt)))
-        }
+        times.forEach { eventQueue.add(EventOccurence(it, SimpleStateUpdateEvent(evt)))  }
     }
 
     /**
@@ -71,9 +67,7 @@ class Simulation {
      * each of the times.
      */
     fun enqueue(evt: AbstractEvent, vararg times: Time) {
-        for (t in times) {
-            eventQueue.add(EventOccurence(t, evt))
-        }
+        times.forEach { eventQueue.add(EventOccurence(it, evt)) }
     }
 
     /**
@@ -81,9 +75,7 @@ class Simulation {
      * times as offsets relative to now.
      */
     fun enqueueRelative(evt: AbstractEvent, vararg deltas: Int) {
-        for (d in deltas) {
-            enqueue(evt, now.plus(d))
-        }
+        deltas.forEach { enqueue(evt, now + it) }
     }
 
     /**
@@ -99,7 +91,7 @@ class Simulation {
      * fires and updates the state somehow, typically with
      * "derived", calculated values
      */
-    fun registerDeriver(exec: (Simulation) -> Unit) : Simulation {
+    fun registerDeriver(exec: SimulationExecutor) : Simulation {
         monitors.add(AlwaysTrueMonitor(exec))
         return this
     }
@@ -120,8 +112,8 @@ class Simulation {
             // tun the event
             nextEventInstance.event.run(this)
             // give all monitors a chance to react
-            for (m in monitors) {
-                m.testAndRun(this, stateSnapshot(now), stateSnapshot(now.immediatelyBefore()))
+            monitors.forEach {
+                it.testAndRun(this, stateSnapshot(now), stateSnapshot(now.immediatelyBefore()))
             }
         }
     }

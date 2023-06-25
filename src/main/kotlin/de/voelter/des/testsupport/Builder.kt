@@ -53,8 +53,6 @@ class ExplicitStateUpdate(val time: Time, val state: StateVariable) : TestStep()
 
 
 fun test(sim: Simulation, init: DESTest.() -> Unit): DESTest {
-    val destest = DESTest(sim)
-    destest.init()
-    return destest
+    return DESTest(sim).apply { init() }
 }
 
