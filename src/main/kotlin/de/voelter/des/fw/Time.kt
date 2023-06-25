@@ -55,7 +55,7 @@ data class Time(val clock: Long) : Comparable<Time> {
      * Utility function to create a time offset
      * by the delta
      */
-    fun plus(delta: Int) = Time(this.clock + delta)
+    operator fun plus(delta: Int) = Time(this.clock + delta)
 
 
 }

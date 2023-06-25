@@ -9,7 +9,7 @@ package de.voelter.des.fw
  * a particular way, they get access to the current state
  * and the state right before now via two snapshots.
  */
-abstract class AbstractMonitor() {
+abstract class AbstractMonitor {
     abstract fun test(nowState: StateSnapshot, prevState: StateSnapshot) : Boolean
     abstract fun run(sim: Simulation) : Unit
     fun testAndRun(sim: Simulation, nowState: StateSnapshot, prevState: StateSnapshot) {
@@ -19,11 +19,13 @@ abstract class AbstractMonitor() {
     }
 }
 
+typealias SimulationExecutor = (Simulation) -> Unit
+
 /**
  * This one is a convenience version where the test and the
  * to-be-executed code are supplied via functions.
  */
-class Monitor(val cond : (StateSnapshot, StateSnapshot) -> Boolean, val exec: (Simulation) -> Unit): AbstractMonitor() {
+class Monitor(val cond : (StateSnapshot, StateSnapshot) -> Boolean, val exec: SimulationExecutor): AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot) = cond(prevState, nowState)
     override fun run(sim: Simulation) { exec(sim) }
 }
@@ -31,7 +33,7 @@ class Monitor(val cond : (StateSnapshot, StateSnapshot) -> Boolean, val exec: (S
 /**
  * A monitor whose condition is always true, ie, it always fires.
  */
-class AlwaysTrueMonitor(val exec: (Simulation) -> Unit): AbstractMonitor() {
+class AlwaysTrueMonitor(val exec: SimulationExecutor): AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot) = true
     override fun run(sim: Simulation) { exec(sim) }
 }
@@ -47,7 +49,7 @@ class AlwaysTrueMonitor(val exec: (Simulation) -> Unit): AbstractMonitor() {
  *
  * A BoolBecomesFalse monitor shoould be developed at some point as well.
  */
-class BoolBecomesTrue(val pick : (StateSnapshot) -> BooleanState, val exec: (Simulation) -> Unit): AbstractMonitor() {
+class BoolBecomesTrue(val pick : (StateSnapshot) -> BooleanState, val exec: SimulationExecutor): AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {
         val curr = pick(nowState).value()
         val prev = pick(prevState).value()
@@ -61,7 +63,7 @@ class BoolBecomesTrue(val pick : (StateSnapshot) -> BooleanState, val exec: (Sim
  * This one is another convenience implementation for integers rising
  * to a particular threshold value (on an increasing path).
  */
-class IntIncreaseTo(val pick : (StateSnapshot) -> IntState, val threshold: Int, val exec: (Simulation) -> Unit): AbstractMonitor() {
+class IntIncreaseTo(val pick : (StateSnapshot) -> IntState, val threshold: Int, val exec: SimulationExecutor): AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {
         val curr = pick(nowState).value()
         val prev = pick(prevState).value()
