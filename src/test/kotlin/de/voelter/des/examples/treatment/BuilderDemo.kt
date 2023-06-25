@@ -4,16 +4,18 @@ import de.voelter.des.fw.IntIncreaseTo
 import de.voelter.des.fw.Simulation
 import de.voelter.des.testsupport.test
 
-val sim = Simulation().registerMonitor(
-    IntIncreaseTo(
-        pick = { it.get<PatientTemperature>() },
-        threshold = 38,
-        exec = { sim ->
-            sim.updateState(PatientFever(true))
-            sim.enqueueRelative(CheckNoMoreFever(), 10, 20, 30)
-        }
+val sim = Simulation().apply {
+    registerMonitor(
+        IntIncreaseTo(
+            pick = { it.get<PatientTemperature>() },
+            threshold = 38,
+            exec = { sim ->
+                sim.updateState(PatientFever(true))
+                sim.enqueueRelative(CheckNoMoreFever(), 10, 20, 30)
+            }
+        )
     )
-)
+}
 
 val t = test(sim) {
     setup(
