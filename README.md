@@ -20,4 +20,6 @@ can run `./gradlew test` from the command line.
   unnecessarily continue testing condition.
 * Performance: Simulation.latest is inefficient.
 
-  
+## Acknowledgements
+
+Thank you very much [Federico Tomassetti](https://github.com/ftomassetti) for reviewing my code and suggesting more idiomatic uses of Kotlin.
