@@ -19,7 +19,7 @@ class PatientDESTest {
     fun checkEndState() {
         val sim = PatientFeverSimulation().run()
         val snapshot = sim.stateSnapshot()
-        assertFalse(snapshot.getBool(PatientFever::class))
-        assertEquals(37, snapshot.getInt(PatientTemperature::class))
+        assertFalse(snapshot.getBool<PatientFever>())
+        assertEquals(37, snapshot.getInt<PatientTemperature>())
     }
 }

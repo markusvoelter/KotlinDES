@@ -46,6 +46,7 @@ class StateSnapshot(val time: Time) {
         val s = variables[cls.qualifiedName]
         return (s as IntState).value()
     }
+    inline fun <reified T> getInt(): Int where T : IntState, T : SingleInstanceStateVariable = getInt(T::class)
 
     /**
      * Convenience method to grab boolean state's values directly
@@ -65,6 +66,7 @@ class StateSnapshot(val time: Time) {
         val s = variables[cls.qualifiedName]
         return (s as BooleanState).value()
     }
+    inline fun <reified T> getBool(): Boolean where T : BooleanState, T : SingleInstanceStateVariable = getBool(T::class)
 
     /**
      * For single instance state variables where the class is the instanceID,
@@ -73,6 +75,7 @@ class StateSnapshot(val time: Time) {
      * for the client
      */
     fun <T : SingleInstanceStateVariable> get(cls: KClass<T>) = cls.cast(variables[cls.qualifiedName])
+    inline fun <reified T : SingleInstanceStateVariable> get() = get(T::class)
 
     /**
      * Debug support

@@ -31,7 +31,7 @@ data class PatientFever(val detected: Boolean) : SingleInstanceBoolState(detecte
  */
 class CheckNoMoreFever : AbstractEvent() {
     override fun run(sim: Simulation) {
-        val temp = sim.stateSnapshot().getInt(PatientTemperature::class)
+        val temp = sim.stateSnapshot().getInt<PatientTemperature>()
         if (temp < 38) {
             sim.updateState(PatientFever(false))
         }
@@ -52,7 +52,7 @@ class PatientFeverSimulation : UserSimulation() {
         // state if the temperature reaches 38 degrees
         simulation.registerMonitor(
             IntIncreaseTo(
-                { it.get(PatientTemperature::class) },
+                { it.get<PatientTemperature>() },
                 38,
                 { sim ->
                     sim.updateState(PatientFever(true))
