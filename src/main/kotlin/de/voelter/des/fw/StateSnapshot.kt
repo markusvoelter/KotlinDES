@@ -80,7 +80,7 @@ class StateSnapshot(val time: Time) {
     fun print() {
         System.err.println("Snapshot for " + time.clock)
         for (k in variables.keys) {
-            System.err.println("  " + k + " -> " + variables.get(k))
+            System.err.println("  " + k + " -> " + variables[k])
         }
         System.err.println("")
     }
