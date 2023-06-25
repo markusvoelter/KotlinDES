@@ -34,7 +34,6 @@ class State {
         history.takeWhile { it.time <= time }.forEach {
             snapshot.register(it.stateVar)
         }
-        history.iterator()
         return snapshot
     }
 
