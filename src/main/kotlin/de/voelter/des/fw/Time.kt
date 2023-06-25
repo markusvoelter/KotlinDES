@@ -38,10 +38,7 @@ data class Time(val clock: Long) : Comparable<Time> {
      * time "just before", this one creates a new Time
      * one tick back.
      */
-    fun immediatelyBefore(): Time {
-        if (clock == 0L) return this
-        return Time(clock - 1)
-    }
+    fun immediatelyBefore(): Time = if (clock == 0L) this else Time(clock - 1)
 
     /**
      * Utility function to create a time offset
