@@ -1,6 +1,6 @@
 # KotlinDES
 
-A simple discrete event simulation (DES) framework implemented in Kotlin. This repository can be seen as a companion implementation to an article on DES that I wrote recently. For now, the article is available as a Google doc (https://docs.google.com/document/d/11T9kca1bcb7eDI7yi9DxPq2TQoQ46_X9uPsuGJ2XyKA); let me know if you need access. However, the article will be posted somewhere reasoable at some point, and I will update the link.
+A simple discrete event simulation (DES) framework implemented in Kotlin. This repository can be seen as a companion implementation to an article on DES that I wrote recently (https://www.linkedin.com/pulse/how-build-discrete-event-simulations-markus-voelter).
 
 ## Runnnig
 
