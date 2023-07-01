@@ -10,10 +10,10 @@ package de.voelter.des.fw
  * and the state right before now via two snapshots.
  */
 abstract class AbstractMonitor {
-    abstract fun test(nowState: StateSnapshot, prevState: StateSnapshot) : Boolean
-    abstract fun run(sim: Simulation) : Unit
+    abstract fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean
+    abstract fun run(sim: Simulation)
     fun testAndRun(sim: Simulation, nowState: StateSnapshot, prevState: StateSnapshot) {
-        if (test(nowState, prevState)){
+        if (test(nowState, prevState)) {
             run(sim)
         }
     }
@@ -25,7 +25,7 @@ typealias SimulationExecutor = (Simulation) -> Unit
  * This one is a convenience version where the test and the
  * to-be-executed code are supplied via functions.
  */
-class Monitor(val cond : (StateSnapshot, StateSnapshot) -> Boolean, val exec: SimulationExecutor): AbstractMonitor() {
+class Monitor(val cond: (StateSnapshot, StateSnapshot) -> Boolean, val exec: SimulationExecutor) : AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot) = cond(prevState, nowState)
     override fun run(sim: Simulation) { exec(sim) }
 }
@@ -33,12 +33,10 @@ class Monitor(val cond : (StateSnapshot, StateSnapshot) -> Boolean, val exec: Si
 /**
  * A monitor whose condition is always true, ie, it always fires.
  */
-class AlwaysTrueMonitor(val exec: SimulationExecutor): AbstractMonitor() {
+class AlwaysTrueMonitor(val exec: SimulationExecutor) : AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot) = true
     override fun run(sim: Simulation) { exec(sim) }
 }
-
-
 
 /**
  * This one is a convenience for BooleanStates. The trigger fires if in the current
@@ -47,29 +45,26 @@ class AlwaysTrueMonitor(val exec: SimulationExecutor): AbstractMonitor() {
  * pick function that grabs the BooleanState from a snapshot. The implementation
  * then applies that pick function to the now and current states.
  *
- * A BoolBecomesFalse monitor shoould be developed at some point as well.
+ * A BoolBecomesFalse monitor should be developed at some point as well.
  */
-class BoolBecomesTrue(val pick : (StateSnapshot) -> BooleanState, val exec: SimulationExecutor): AbstractMonitor() {
+class BoolBecomesTrue(val pick: (StateSnapshot) -> BooleanState, val exec: SimulationExecutor) : AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {
-        val curr = pick(nowState).value()
-        val prev = pick(prevState).value()
-        return curr  && !prev
+        val curr = pick(nowState).value
+        val prev = pick(prevState).value
+        return curr && !prev
     }
     override fun run(sim: Simulation) { exec(sim) }
 }
-
 
 /**
  * This one is another convenience implementation for integers rising
  * to a particular threshold value (on an increasing path).
  */
-class IntIncreaseTo(val pick : (StateSnapshot) -> IntState, val threshold: Int, val exec: SimulationExecutor): AbstractMonitor() {
+class IntIncreaseTo(val pick: (StateSnapshot) -> IntState, val threshold: Int, val exec: SimulationExecutor) : AbstractMonitor() {
     override fun test(nowState: StateSnapshot, prevState: StateSnapshot): Boolean {
-        val curr = pick(nowState).value()
-        val prev = pick(prevState).value()
-        return curr >= threshold && prev < threshold
+        val curr = pick(nowState).value
+        val prev = pick(prevState).value
+        return threshold in (prev + 1)..curr
     }
     override fun run(sim: Simulation) { exec(sim) }
 }
-
-

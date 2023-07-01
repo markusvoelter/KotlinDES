@@ -1,5 +1,7 @@
 package de.voelter.des.fw
 
+import java.util.concurrent.atomic.AtomicLong
+
 /**
  * Represents the time in the system. Time has two parts. The
  * wall-clock time represented as an integer (the one passed
@@ -16,11 +18,11 @@ data class Time(val clock: Long) : Comparable<Time> {
      * ID.
      */
     companion object {
-        var globalCounter = 0L
-        fun newID() = globalCounter++
+        private var globalCounter = AtomicLong(0L)
+        fun newID() = globalCounter.getAndIncrement()
     }
 
-    val dense : Long = newID()
+    val dense: Long = newID()
 
     /**
      * This allows comparison with the native <, >, <= etc. operators.
@@ -30,15 +32,7 @@ data class Time(val clock: Long) : Comparable<Time> {
      * dense values, we ensure "insertion ordering" per clock time.
      */
     override fun compareTo(other: Time): Int {
-        return when {
-            this.clock > other.clock -> 1
-            this.clock < other.clock -> -1
-            else -> when {
-                this.dense > other.dense -> 1
-                this.dense < other.dense -> -1
-                else -> 0
-            }
-        }
+        return compareBy<Time>({ it.clock }, { it.dense }).compare(this, other)
     }
 
     /**
@@ -46,17 +40,11 @@ data class Time(val clock: Long) : Comparable<Time> {
      * time "just before", this one creates a new Time
      * one tick back.
      */
-    fun immediatelyBefore() : Time {
-        if (clock == 0L) return this
-        return Time(clock - 1)
-    }
+    fun immediatelyBefore(): Time = if (clock == 0L) this else Time(clock - 1)
 
     /**
      * Utility function to create a time offset
      * by the delta
      */
     operator fun plus(delta: Int) = Time(this.clock + delta)
-
-
 }
-

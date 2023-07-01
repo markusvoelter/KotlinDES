@@ -12,7 +12,7 @@ class DESTest(val sim: Simulation) {
     var steps = TestStepContainer()
 
     fun setup(vararg initialStates: StateVariable) {
-        initials.addAll(initialStates)
+        initials += initialStates
     }
 
     fun steps(init: TestStepContainer.() -> Unit): TestStepContainer {
@@ -21,7 +21,7 @@ class DESTest(val sim: Simulation) {
         return steps
     }
 
-    fun buildSimulation() : Simulation {
+    fun buildSimulation(): Simulation {
         for (initial in initials) {
             sim.setupState(initial)
         }
@@ -31,28 +31,23 @@ class DESTest(val sim: Simulation) {
         return sim
     }
 
-    fun buildAndRunSimulation() : Simulation {
+    fun buildAndRunSimulation(): Simulation {
         val sim = buildSimulation()
         sim.run()
         return sim
     }
-
 }
 
 class TestStepContainer {
     val steps = ArrayList<TestStep>()
     infix fun Int.modify(state: StateVariable) {
-        steps.add(ExplicitStateUpdate(Time(this.toLong()), state))
+        steps += ExplicitStateUpdate(Time(this.toLong()), state)
     }
 }
-
 
 abstract class TestStep
 class ExplicitStateUpdate(val time: Time, val state: StateVariable) : TestStep()
 
-
-
 fun test(sim: Simulation, init: DESTest.() -> Unit): DESTest {
     return DESTest(sim).apply { init() }
 }
-

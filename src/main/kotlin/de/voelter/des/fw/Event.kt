@@ -10,11 +10,11 @@ abstract class AbstractEvent {
 
 /**
  * An event type whose only effect is to change the value of a
- * state variable. The user supplies a the code to produce that
+ * state variable. The user supplies the code to produce that
  * State variable. There could be another one that produces a list
  * of state variables instead of just one.
  */
-class StateUpdateEvent(val code : (State) -> StateVariable) : AbstractEvent() {
+class StateUpdateEvent(val code: (State) -> StateVariable) : AbstractEvent() {
     override fun run(sim: Simulation) {
         val stateVar = code(sim.state())
         sim.state().update(sim.now, stateVar)
@@ -26,7 +26,7 @@ class StateUpdateEvent(val code : (State) -> StateVariable) : AbstractEvent() {
  * a state variable for immediate update, but we directly pass the state
  * variable.
  */
-class SimpleStateUpdateEvent(val stateVar : StateVariable) : AbstractEvent() {
+class SimpleStateUpdateEvent(val stateVar: StateVariable) : AbstractEvent() {
     override fun run(sim: Simulation) {
         sim.state().update(sim.now, stateVar)
     }
@@ -34,21 +34,13 @@ class SimpleStateUpdateEvent(val stateVar : StateVariable) : AbstractEvent() {
 
 /**
  * Helper class for the queue. We don't directly store the events in the
- * queue, but wrapped with an EventOccurence; this instance also captures
+ * queue, but wrapped with an EventOccurrence; this instance also captures
  * the time at which the event is supposed to be executed.
  */
-data class EventOccurence(val time: Time, val event: AbstractEvent)
+data class EventOccurrence(val time: Time, val event: AbstractEvent)
 
 /**
  * And here is the comparator for the event instances, to make sure
  * that our sorted list sorts them by time
  */
-class EventInstanceComparator : Comparator<EventOccurence> {
-    override fun compare(e1: EventOccurence, e2: EventOccurence): Int {
-        return when {
-            e1.time < e2.time -> -1
-            e1.time > e2.time -> 1
-            else -> 0
-        }
-    }
-}
+object EventInstanceComparator : Comparator<EventOccurrence> by compareBy({ it.time })

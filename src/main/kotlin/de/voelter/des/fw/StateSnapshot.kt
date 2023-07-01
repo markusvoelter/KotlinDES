@@ -1,6 +1,7 @@
 package de.voelter.des.fw
 
 import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
 /**
  * A snapshot of the state history for a given point in time.
@@ -15,7 +16,7 @@ class StateSnapshot(val time: Time) {
 
     /**
      * registers a StateVariable by ID. This function is called
-     * by State in order of occurence fo the StateUpdates, then
+     * by State in order of occurrence fo the StateUpdates, then
      * this ends up with the latest update (per instanceID) last.
      */
     internal fun register(state: StateVariable) {
@@ -30,41 +31,40 @@ class StateSnapshot(val time: Time) {
     /**
      * Convenience method to grab integer state's values directly
      */
-    fun getInt(instanceID: String) : Int {
-        val s = variables[instanceID]
-        if (s is IntState) {
-            return s.value()
+    fun getInt(instanceID: String): Int {
+        return when (val s = variables[instanceID]) {
+            is IntState -> s.value
+            else -> throw RuntimeException("$instanceID is not an IntState")
         }
-        throw RuntimeException("$instanceID is not an IntState")
     }
 
     /**
-     * directly returns the intger value
+     * directly returns the integer value
      */
-    fun <T> getInt(cls: KClass<T>) : Int where T: IntState, T: SingleInstanceStateVariable {
+    fun <T> getInt(cls: KClass<T>): Int where T : IntState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]
-        return (s as IntState).value()
+        return (s as IntState).value
     }
-
+    inline fun <reified T> getInt(): Int where T : IntState, T : SingleInstanceStateVariable = getInt(T::class)
 
     /**
      * Convenience method to grab boolean state's values directly
      */
-    fun getBool(instanceID: String) : Boolean {
-        val s = variables[instanceID]
-        if (s is BooleanState) {
-            return s.value()
+    fun getBool(instanceID: String): Boolean {
+        return when (val s = variables[instanceID]) {
+            is BooleanState -> s.value
+            else -> throw RuntimeException("$instanceID is not an BooleanState")
         }
-        throw RuntimeException("$instanceID is not an BooleanState")
     }
 
     /**
-     * directly returns the intger value
+     * directly returns the boolean value
      */
-    fun <T> getBool(cls: KClass<T>) : Boolean where T: BooleanState, T: SingleInstanceStateVariable {
+    fun <T> getBool(cls: KClass<T>): Boolean where T : BooleanState, T : SingleInstanceStateVariable {
         val s = variables[cls.qualifiedName]
-        return (s as BooleanState).value()
+        return (s as BooleanState).value
     }
+    inline fun <reified T> getBool(): Boolean where T : BooleanState, T : SingleInstanceStateVariable = getBool(T::class)
 
     /**
      * For single instance state variables where the class is the instanceID,
@@ -72,17 +72,17 @@ class StateSnapshot(val time: Time) {
      * This way we can use the class to cast the result, making value access simpler
      * for the client
      */
-    fun <T : SingleInstanceStateVariable> get(cls: KClass<T>) = variables[cls.qualifiedName] as T
+    fun <T : SingleInstanceStateVariable> get(cls: KClass<T>) = cls.cast(variables[cls.qualifiedName])
+    inline fun <reified T : SingleInstanceStateVariable> get() = get(T::class)
 
     /**
      * Debug support
      */
     fun print() {
-        System.err.println("Snapshot for " + time.clock)
+        System.err.println("Snapshot for ${time.clock}")
         for (k in variables.keys) {
-            System.err.println("  " + k + " -> " + variables.get(k))
+            System.err.println("  $k -> ${variables[k]}")
         }
         System.err.println("")
     }
-
 }
